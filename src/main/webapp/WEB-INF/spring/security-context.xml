@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- security-context.xml  : 시큐리티 관련 모든 처리 -->
+	
+	<!-- 시큐리티 관련 객체 생성 -->
+	<bean id="customAccessDenied" class="com.itwillbs.security.CustomAccessDeniedHandler"/>
+	
+	<!-- 시큐리티 웹 설정 -->
+	<security:http>
+		
+		<!-- 각 주소별 권한을 부여 -->
+		<security:intercept-url pattern="/sample/all"  access="permitAll"/>
+		<security:intercept-url pattern="/sample/member"  access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/sample/admin"  access="hasRole('ROLE_ADMIN')"/>
+	
+		<security:intercept-url pattern="/boards/*"  access="hasRole('ROLE_ADMIN')"/>
+		
+		<!-- 접근권한 확인하기위한 로그인페이지(기본값) -->
+<!-- 		<security:form-login/> -->
+		<security:form-login login-page="/customLogin"/>
+		
+		<!-- 접근거부 처리(403)  -->
+<!-- 		<security:access-denied-handler error-page="/accessErr"/> -->
+		<security:access-denied-handler ref="customAccessDenied" />
+		
+	</security:http>
+	<!-- 시큐리티 웹 설정 -->
+
+	
+	<!-- 인증매니저 -->
+	<security:authentication-manager>
+		<!-- 인증 처리 담당자  -->
+		<security:authentication-provider>
+			<!--사용자출입(인증정보) 정보관리 -->
+		  <security:user-service>
+		  
+		  	<!-- 사용자 인증(출입증 발급) -->
+		  	<security:user name="member" password="{noop}1234" authorities="ROLE_MEMBER"/>
+		  	<security:user name="admin" password="{noop}1234" authorities="ROLE_MEMBER,ROLE_ADMIN"/>
+		  
+		  </security:user-service>		
+		</security:authentication-provider>
+	</security:authentication-manager>
+	<!-- 인증매니저 -->
+	
+
+</beans>

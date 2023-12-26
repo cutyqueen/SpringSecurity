@@ -1,0 +1,35 @@
+스프링시큐리티.txt p606페이지~
+
+* Spring Web Security 
+    
+    필터 : JSP/Servlet에서 제공하는 기능(컨트롤러 제어)
+          => 스프링과 무관한 서블릿의 자원(서블릿의 기능만 사용)
+    인터셉터 : Spring에서 제공하는 기능(컨트롤러 제어)
+          => 스프링 빈(객체)로 관리, 컨텍스트안에 포함되있음(스프링의 기능 사용가능)
+          
+          
+    * pom.xml 파일 추가  (* 아래 파일의 버전은 가능한 동일하게 설치)    
+          spring-security-core
+          spring-security-config
+          spring-security-taglibs
+
+     O-Auth          
+   * 인증(Authentication) : 자신을 증명하는것 => 내가 다른사람에게 확인할수있는 무엇인가를 전달하는것 
+  
+  	 - 사용자아이디 (userid/id -> username) : 시큐리티에서는 아이디의 정보를 username에 저장
+  	                                          => 기존의 아이디정보,이름정보를 변경 필요있음
+  	 
+  	 - 사용자 (User -> MemberVO) : 시큐리티에서의 User이름은 인증정보와 권한을 저장하는 객체로 정의되어 있음
+  	                             => 단순 사용자의 정보를 저장하는 형태의 이름으로 사용을 금한다
+   
+   * 인가(Authorization) : 다른사람이 나에게 어떤 자격을 부여
+      (권한부여)
+   
+   
+   * 스프링 시큐리티는 POST방식으로 정보 전달시 반드시 CSRF토큰 사용해야함!
+   * CSRF(Cross-Site Request Forgery) 공격 
+     => 서버에서 정보를 받아들일때 데이터 사전검증 X / 악의적인 목적으로 권한 탈취가능
+        (링크,이미지 클릭시 처리...)
+    
+     => POST방식 정보전달, CSRF 토큰(랜덤 데이터 / _csrf 객체 이름으로 호출 가능) 
+   
