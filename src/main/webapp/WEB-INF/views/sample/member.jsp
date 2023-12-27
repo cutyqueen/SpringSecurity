@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1> member.jsp </h1>
+	<h2><a href="/logout">로그아웃</a></h2>
 </body>
 </html>
